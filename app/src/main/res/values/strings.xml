@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">My Simpsons App</string>
+    <string name="i_m_looking_for">I\'m looking for...</string>
 </resources>

@@ -45,7 +45,11 @@ class MainFragment : Fragment() {
         mainViewModel.charactersList.observe(viewLifecycleOwner){
             simpsonAdapter.differ.submitList(it)
         }
-        
+
+        mainViewModel.simpsonModel.observe(viewLifecycleOwner){
+//            binding.footer.text = it.heading.toString()
+        }
+
 
     }
 
