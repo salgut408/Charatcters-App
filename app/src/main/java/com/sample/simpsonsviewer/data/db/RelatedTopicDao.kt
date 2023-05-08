@@ -1,9 +1,11 @@
 package com.sample.simpsonsviewer.data.db
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.sample.simpsonsviewer.domain.domain_models.RelatedTopicModel
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -12,5 +14,5 @@ interface RelatedTopicDao {
     suspend fun insert(items: List<RelatedTopicDb>): List<Long>
 
     @Query("SELECT * FROM simpsons_table")
-    fun getAllSavedItems(): Flow<List<RelatedTopicDb>>
+    fun getAllSavedItems(): LiveData<List<RelatedTopicModel>>
 }

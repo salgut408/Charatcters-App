@@ -6,7 +6,7 @@ import com.sample.simpsonsviewer.data.db.RelatedTopicDb
 
 data class RelatedTopicModel(
     val firstURL: String = "",
-    val icon: IconModel = IconModel(),
+    val icon: String = "",
     val result: String = "",
     val text: String = ""
 )
@@ -14,7 +14,7 @@ data class RelatedTopicModel(
 fun RelatedTopicModel.asDb(): RelatedTopicDb {
     return RelatedTopicDb(
         firstURL = firstURL,
-        icon = icon.urL,
+        icon = icon,
         result = result,
         text = text
     )

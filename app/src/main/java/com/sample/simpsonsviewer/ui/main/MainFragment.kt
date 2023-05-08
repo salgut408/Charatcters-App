@@ -31,15 +31,17 @@ class MainFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentMainBinding.inflate(inflater)
-        mainViewModel.getInfo()
-        binding.headerDisplay.text = mainViewModel.simpsonModel.value?.abstractSource
+        binding = FragmentMainBinding.inflate(inflater).apply {
+            viewModel = mainViewModel
+        }
+        binding.headerDisplay.text = mainViewModel.simpsonModel.value?.toString()
         return binding.root
     }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.lifecycleOwner = this.viewLifecycleOwner
 
     setUpRecyclerView()
         mainViewModel.simpsonModel.observe(viewLifecycleOwner ) {text ->

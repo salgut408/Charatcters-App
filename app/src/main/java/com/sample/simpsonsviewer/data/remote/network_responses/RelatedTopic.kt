@@ -19,7 +19,7 @@ data class RelatedTopic(
 fun RelatedTopic.asDomain(): RelatedTopicModel {
     return RelatedTopicModel(
         firstURL = firstURL ?: "",
-        icon = icon?.asDomain() ?: IconModel(),
+        icon = icon?.urL ?: "",
         result = result ?: "",
         text = text ?: ""
     )

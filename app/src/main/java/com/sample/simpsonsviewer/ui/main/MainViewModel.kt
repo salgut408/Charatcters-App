@@ -1,14 +1,12 @@
 package com.sample.simpsonsviewer.ui.main
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.sample.simpsonsviewer.domain.domain_models.RelatedTopicModel
 import com.sample.simpsonsviewer.domain.domain_models.SimpsonsModel
 import com.sample.simpsonsviewer.domain.repositories.SimpsonsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -24,21 +22,23 @@ class MainViewModel @Inject constructor(
     val charactersList: LiveData<List<RelatedTopicModel>> get() = _charactersList
 
     init {
-        getInfo()
         getInfoForDb()
+        getModelInfo()
         callList()
+        Log.e("VM-MODELinit", simpsonModel.value.toString())
+
     }
 
-    fun getInfo() = viewModelScope.launch {
+    fun getModelInfo() = viewModelScope.launch {
         val model = simpsonsRepository.getSimpsonsModel()
-        Log.e("VMODEL", model.toString())
+        Log.e("VM-MODEL", model.toString())
         _simpsonModel.postValue(model)
     }
 
     fun callList() = viewModelScope.launch {
-        val list = simpsonsRepository.getSimpsonsList()
-        Log.e("VMODEL", list.toString())
-        _charactersList.postValue(list)
+        val list = simpsonsRepository.getCharactersFromDb()
+        Log.e("VM-List", list.toString())
+        _charactersList.postValue(list.value)
 
     }
 

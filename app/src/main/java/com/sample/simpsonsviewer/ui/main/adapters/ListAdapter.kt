@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.sample.simpsonsviewer.databinding.ItemPreviewBinding
 import com.sample.simpsonsviewer.domain.domain_models.RelatedTopicModel
 
-class ListAdapter(): RecyclerView.Adapter<ListAdapter.ItemViewHolder>() {
+class ListAdapter(): RecyclerView.Adapter< ListAdapter.ItemViewHolder>() {
 
     inner class ItemViewHolder(val binding: ItemPreviewBinding): RecyclerView.ViewHolder(binding.root)
 
@@ -17,7 +17,7 @@ class ListAdapter(): RecyclerView.Adapter<ListAdapter.ItemViewHolder>() {
             oldItem: RelatedTopicModel,
             newItem: RelatedTopicModel
         ): Boolean {
-            return oldItem.firstURL == newItem.firstURL
+            return oldItem.result === newItem.result
         }
 
         override fun areContentsTheSame(
@@ -37,12 +37,34 @@ class ListAdapter(): RecyclerView.Adapter<ListAdapter.ItemViewHolder>() {
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val item = differ.currentList[position]
-        holder.binding.apply {
-            itemName.text = item.text
+        holder.apply {
+            binding.itemName.text = item.text
         }
     }
 
     override fun getItemCount(): Int {
         return differ.currentList.size
+    }
+}
+
+
+class RvAdapter(var list: List<RelatedTopicModel>,): RecyclerView.Adapter<RvAdapter.ViewHolder>(){
+    inner class ViewHolder(val binding: ItemPreviewBinding): RecyclerView.ViewHolder(binding.root)
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val binding = ItemPreviewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(binding)
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        with(holder){
+            with(list[position]){
+                binding.itemName.text = this.text
+            }
+        }
+    }
+
+    override fun getItemCount(): Int {
+        return list.size
     }
 }
