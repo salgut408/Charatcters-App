@@ -44,17 +44,17 @@ class MainFragment : Fragment() {
 
         setUpRecyclerView()
         mainViewModel.charactersList.observe(viewLifecycleOwner,
-        Observer<List<RelatedTopicModel>> {standing ->
-            standing.apply { simpsonAdapter.differ.submitList(standing) }
+        Observer<List<RelatedTopicModel>> {list ->
+            list.apply { simpsonAdapter.differ.submitList(list) }
         })
 
-//        mainViewModel.simpsonModel.observe(viewLifecycleOwner){
-//            Log.d("FUCK", "$it")
-//            binding.headerDisplay.text = it.relatedTopics.toString()
-//        }
-//        mainViewModel.simpsonModel.observe(viewLifecycleOwner ) {text ->
-//            simpsonAdapter.differ.submitList(text.relatedTopics)
-//        }
+        mainViewModel.charactersList.observe(viewLifecycleOwner){
+            Log.d("OBSERVING", "$it")
+            binding.headerDisplay.text = it.toString()
+        }
+        mainViewModel.simpsonModel.observe(viewLifecycleOwner ) {text ->
+            simpsonAdapter.differ.submitList(text.relatedTopics)
+        }
 
 
         binding.headerDisplay.text = mainViewModel.simpsonModel.toString()

@@ -33,6 +33,7 @@ class MainViewModel @Inject constructor(
         val model = simpsonsRepository.getSimpsonsModel()
         Log.e("VM-MODEL", model.toString())
         _simpsonModel.postValue(model)
+        _charactersList.postValue(model.relatedTopics)
     }
 
 //    fun callList() = viewModelScope.launch {
