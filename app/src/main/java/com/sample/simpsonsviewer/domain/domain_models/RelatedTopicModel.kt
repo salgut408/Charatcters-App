@@ -8,7 +8,8 @@ data class RelatedTopicModel(
     val firstURL: String = "",
     val icon: String = "",
     val result: String = "",
-    val text: String = ""
+    val text: String = "",
+    val name: String = ""
 )
 
 fun RelatedTopicModel.asDb(): RelatedTopicDb {
@@ -16,6 +17,8 @@ fun RelatedTopicModel.asDb(): RelatedTopicDb {
         firstURL = firstURL,
         icon = icon,
         result = result,
-        text = text
+        text = text,
+        name = text.split("-", ",").first()
+
     )
 }

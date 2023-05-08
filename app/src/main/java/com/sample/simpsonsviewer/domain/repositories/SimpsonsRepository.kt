@@ -10,6 +10,8 @@ interface SimpsonsRepository {
     suspend fun getSimpsonsList():List<RelatedTopicModel>
     suspend fun getSimpsonsModel(): SimpsonsModel
     suspend fun saveInDatabase()
-//    suspend fun getCharactersFromDb(): List<RelatedTopicModel>
+    suspend fun getCharactersFromDb(): List<RelatedTopicModel>
+//    suspend fun getAllNamesDb(): List<String>
+
 
 }

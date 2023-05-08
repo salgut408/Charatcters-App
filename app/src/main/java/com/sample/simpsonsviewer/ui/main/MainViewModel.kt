@@ -21,30 +21,43 @@ class MainViewModel @Inject constructor(
     private val _charactersList: MutableLiveData<List<RelatedTopicModel>> = MutableLiveData()
     val charactersList: LiveData<List<RelatedTopicModel>> get() = _charactersList
 
-    init {
-//        getInfoForDb()
-        getModelInfo()
-//        callList()
-        Log.e("VM-MODELinit", simpsonModel.value.toString())
+    val _namesList: MutableLiveData<List<String>> = MutableLiveData()
+    val namesList: LiveData<List<String>> get() = _namesList
 
+    init {
+        getInfoForDb()
+        getModelInfo()
+        callList()
+
+    }
+
+    fun getNames(list: List<RelatedTopicModel>): List<String>{
+        val delim = "-"
+       return list.map { it.text.split(delim).toString() }
     }
 
     fun getModelInfo() = viewModelScope.launch {
         val model = simpsonsRepository.getSimpsonsModel()
         Log.e("VM-MODEL", model.toString())
         _simpsonModel.postValue(model)
-        _charactersList.postValue(model.relatedTopics)
+//        _charactersList.postValue(model.relatedTopics)
+
     }
 
-//    fun callList() = viewModelScope.launch {
-//        val list = simpsonsRepository.getCharactersFromDb()
-//        Log.e("VM-List", list.toString())
-//        _charactersList.postValue(list)
-//
-//    }
+    fun callList() = viewModelScope.launch {
+        val list = simpsonsRepository.getCharactersFromDb()
+        Log.e("VM-List", list.toString())
+        _charactersList.postValue(list)
+        _namesList.postValue(getNames(list))
+
+    }
 
     fun getInfoForDb() = viewModelScope.launch {
         simpsonsRepository.saveInDatabase()
+    }
+
+    fun callNamesList() = viewModelScope.launch {
+//        simpsonsRepository.getAllNamesDb()
     }
 
 }

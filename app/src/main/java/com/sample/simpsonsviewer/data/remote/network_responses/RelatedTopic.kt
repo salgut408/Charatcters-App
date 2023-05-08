@@ -21,6 +21,7 @@ fun RelatedTopic.asDomain(): RelatedTopicModel {
         firstURL = firstURL ?: "",
         icon = icon?.urL ?: "",
         result = result ?: "",
-        text = text ?: ""
+        text = text ?: "",
+        name = text?.split("-", ",")?.first() ?: ""
     )
 }

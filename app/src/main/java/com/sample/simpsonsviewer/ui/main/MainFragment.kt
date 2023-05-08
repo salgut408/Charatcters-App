@@ -9,21 +9,20 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.sample.simpsonsviewer.data.constants.Constants.Companion.BASE_URL
 import com.sample.simpsonsviewer.databinding.FragmentMainBinding
 import com.sample.simpsonsviewer.domain.domain_models.RelatedTopicModel
-import com.sample.simpsonsviewer.domain.domain_models.SimpsonsModel
-import com.sample.simpsonsviewer.ui.main.adapters.ListAdapter
+import com.sample.simpsonsviewer.ui.main.adapters.ItemAdapter
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.lifecycle.HiltViewModel
+
 @AndroidEntryPoint
 class MainFragment : Fragment() {
 
 
 
     private  val mainViewModel by viewModels<MainViewModel>()
-    lateinit var simpsonAdapter: ListAdapter
-    lateinit var binding: FragmentMainBinding
+    lateinit var simpsonAdapter: ItemAdapter
+    private var _binding: FragmentMainBinding? = null
+    val binding get() = _binding!!
 
 
 
@@ -32,37 +31,26 @@ class MainFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentMainBinding.inflate(inflater, container, false)
-        binding.headerDisplay.text = mainViewModel.simpsonModel.value?.toString()
+        _binding = FragmentMainBinding.inflate(inflater, container, false)
         val root : View = binding.root
         return root
     }
 
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         setUpRecyclerView()
-        mainViewModel.charactersList.observe(viewLifecycleOwner,
-        Observer<List<RelatedTopicModel>> {list ->
-            list.apply { simpsonAdapter.differ.submitList(list) }
-        })
 
         mainViewModel.charactersList.observe(viewLifecycleOwner){
-            Log.d("OBSERVING", "$it")
-            binding.headerDisplay.text = it.toString()
+            simpsonAdapter.differ.submitList(it)
         }
-        mainViewModel.simpsonModel.observe(viewLifecycleOwner ) {text ->
-            simpsonAdapter.differ.submitList(text.relatedTopics)
-        }
-
-
-        binding.headerDisplay.text = mainViewModel.simpsonModel.toString()
+        
 
     }
 
     private fun setUpRecyclerView() {
-        simpsonAdapter = ListAdapter()
+        simpsonAdapter = ItemAdapter()
         binding.recView.apply {
           adapter = simpsonAdapter
             layoutManager = LinearLayoutManager(this.context)

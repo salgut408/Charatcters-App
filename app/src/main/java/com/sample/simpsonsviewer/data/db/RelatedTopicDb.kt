@@ -11,7 +11,8 @@ data class RelatedTopicDb(
     val icon: String ,
     val result: String ,
     @PrimaryKey(autoGenerate = false)
-    val text: String
+    val text: String,
+    val name: String
 
 )
 
@@ -20,6 +21,7 @@ fun RelatedTopicDb.asDomain(): RelatedTopicModel {
         firstURL = firstURL,
         icon = icon,
         result = result,
-        text = text
+        text = text,
+        name = name
     )
 }

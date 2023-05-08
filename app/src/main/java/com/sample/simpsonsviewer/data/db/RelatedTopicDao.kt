@@ -15,4 +15,7 @@ interface RelatedTopicDao {
 
     @Query("SELECT * FROM simpsons_table")
     fun getAllSavedItems():List<RelatedTopicModel>
+
+//    @Query("SELECT * FROM simpsons_table")
+//    fun getAllSavedNames():List<String>
 }

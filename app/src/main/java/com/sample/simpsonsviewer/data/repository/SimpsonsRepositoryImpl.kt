@@ -52,10 +52,23 @@ class SimpsonsRepositoryImpl @Inject constructor(
         }
     }
 
-//    override suspend fun getCharactersFromDb(): List<RelatedTopicModel> {
-//        return dao.getAllSavedItems()
-//    }
+    override suspend fun getCharactersFromDb(): List<RelatedTopicModel> {
+        var result = listOf<RelatedTopicModel>()
+        withContext(Dispatchers.IO){
+             result = dao.getAllSavedItems()
 
+        }
+        return result
+
+    }
+//
+//    override suspend fun getAllNamesDb(): List<String> {
+//        var result = listOf<String>()
+//        withContext(Dispatchers.IO){
+//            result = dao.getAllSavedNames()
+//        }
+//        return result
+//    }
 }
 
 

@@ -1,25 +1,30 @@
 package com.sample.simpsonsviewer.ui.main.adapters
 
-import android.content.ClipData.Item
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.sample.simpsonsviewer.databinding.ItemPreviewBinding
 import com.sample.simpsonsviewer.domain.domain_models.RelatedTopicModel
 
-class ListAdapter(): RecyclerView.Adapter< ListAdapter.ItemViewHolder>() {
+class ItemAdapter(): RecyclerView.Adapter< ItemAdapter.ItemViewHolder>() {
 
-    inner class ItemViewHolder(val binding: ItemPreviewBinding): RecyclerView.ViewHolder(binding.root)
+     class ItemViewHolder(
+         val binding: ItemPreviewBinding
+         ): RecyclerView.ViewHolder(binding.root) {}
 
     private val differCallBack = object : DiffUtil.ItemCallback<RelatedTopicModel>() {
         override fun areItemsTheSame(
             oldItem: RelatedTopicModel,
             newItem: RelatedTopicModel
         ): Boolean {
-            return oldItem.result === newItem.result
+            return oldItem.text == newItem.text
         }
+
+
 
         override fun areContentsTheSame(
             oldItem: RelatedTopicModel,
@@ -38,13 +43,13 @@ class ListAdapter(): RecyclerView.Adapter< ListAdapter.ItemViewHolder>() {
                 parent, false
             )
         )
-
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val item = differ.currentList[position]
-        holder.binding.apply {
-            itemName.text = item.text
+        holder .apply {
+            binding.itemName.text = item.name
+
         }
     }
 
@@ -52,5 +57,7 @@ class ListAdapter(): RecyclerView.Adapter< ListAdapter.ItemViewHolder>() {
         return differ.currentList.size
     }
 }
+
+
 
 
