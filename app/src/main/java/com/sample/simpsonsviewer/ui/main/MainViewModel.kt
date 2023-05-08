@@ -22,9 +22,9 @@ class MainViewModel @Inject constructor(
     val charactersList: LiveData<List<RelatedTopicModel>> get() = _charactersList
 
     init {
-        getInfoForDb()
+//        getInfoForDb()
         getModelInfo()
-        callList()
+//        callList()
         Log.e("VM-MODELinit", simpsonModel.value.toString())
 
     }
@@ -35,12 +35,12 @@ class MainViewModel @Inject constructor(
         _simpsonModel.postValue(model)
     }
 
-    fun callList() = viewModelScope.launch {
-        val list = simpsonsRepository.getCharactersFromDb()
-        Log.e("VM-List", list.toString())
-        _charactersList.postValue(list.value)
-
-    }
+//    fun callList() = viewModelScope.launch {
+//        val list = simpsonsRepository.getCharactersFromDb()
+//        Log.e("VM-List", list.toString())
+//        _charactersList.postValue(list)
+//
+//    }
 
     fun getInfoForDb() = viewModelScope.launch {
         simpsonsRepository.saveInDatabase()

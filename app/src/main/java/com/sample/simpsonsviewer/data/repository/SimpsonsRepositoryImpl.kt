@@ -52,9 +52,9 @@ class SimpsonsRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getCharactersFromDb(): LiveData<List<RelatedTopicModel>> {
-        return dao.getAllSavedItems()
-    }
+//    override suspend fun getCharactersFromDb(): List<RelatedTopicModel> {
+//        return dao.getAllSavedItems()
+//    }
 
 }
 

@@ -14,5 +14,5 @@ interface RelatedTopicDao {
     suspend fun insert(items: List<RelatedTopicDb>): List<Long>
 
     @Query("SELECT * FROM simpsons_table")
-    fun getAllSavedItems(): LiveData<List<RelatedTopicModel>>
+    fun getAllSavedItems():List<RelatedTopicModel>
 }

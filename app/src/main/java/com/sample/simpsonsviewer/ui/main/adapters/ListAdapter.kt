@@ -1,5 +1,6 @@
 package com.sample.simpsonsviewer.ui.main.adapters
 
+import android.content.ClipData.Item
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
@@ -31,14 +32,19 @@ class ListAdapter(): RecyclerView.Adapter< ListAdapter.ItemViewHolder>() {
     val differ = AsyncListDiffer(this, differCallBack)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
-        val binding = ItemPreviewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ItemViewHolder(binding)
+        return ItemViewHolder(
+            ItemPreviewBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent, false
+            )
+        )
+
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val item = differ.currentList[position]
-        holder.apply {
-            binding.itemName.text = item.text
+        holder.binding.apply {
+            itemName.text = item.text
         }
     }
 
@@ -48,23 +54,3 @@ class ListAdapter(): RecyclerView.Adapter< ListAdapter.ItemViewHolder>() {
 }
 
 
-class RvAdapter(var list: List<RelatedTopicModel>,): RecyclerView.Adapter<RvAdapter.ViewHolder>(){
-    inner class ViewHolder(val binding: ItemPreviewBinding): RecyclerView.ViewHolder(binding.root)
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ItemPreviewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewHolder(binding)
-    }
-
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        with(holder){
-            with(list[position]){
-                binding.itemName.text = this.text
-            }
-        }
-    }
-
-    override fun getItemCount(): Int {
-        return list.size
-    }
-}
