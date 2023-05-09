@@ -1,6 +1,10 @@
 package com.sample.simpsonsviewer
 
+import android.content.res.Configuration
 import android.os.Bundle
+import android.view.View
+import android.view.ViewGroup
+import android.view.WindowMetrics
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -19,13 +23,27 @@ class MainActivity : AppCompatActivity() {
        val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val container: ViewGroup = binding.container
+        container.addView(object : View(this) {
+            override fun onConfigurationChanged(newConfig: Configuration?) {
+                super.onConfigurationChanged(newConfig)
+                computeWindowSizeClasses()
+            }
+        })
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         val navController: NavController = navHostFragment.navController
 
     }
     override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(androidx.navigation.fragment.R.id.nav_host_fragment_container)
+        val navController = findNavController(R.id.fragmentContainerView)
         return navController.navigateUp()
                 || super.onSupportNavigateUp()
     }
+
+    private fun computeWindowSizeClasses() {
+//        val metrics = WindowMetricsCalculator.
+    }
 }
+
+
+enum class WindowSizeClass { COMPACT, MEDIUM, EXPANDED }

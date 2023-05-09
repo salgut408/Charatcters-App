@@ -21,7 +21,7 @@ class MainFragment : Fragment() {
     private  val mainViewModel by viewModels<MainViewModel>()
     lateinit var simpsonAdapter: ItemAdapter
     private var _binding: FragmentMainBinding? = null
-    val binding get() = _binding!!
+    private val binding get() = _binding!!
 
 
 
