@@ -23,13 +23,7 @@ class MainActivity : AppCompatActivity() {
        val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val container: ViewGroup = binding.container
-        container.addView(object : View(this) {
-            override fun onConfigurationChanged(newConfig: Configuration?) {
-                super.onConfigurationChanged(newConfig)
-                computeWindowSizeClasses()
-            }
-        })
+
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         val navController: NavController = navHostFragment.navController
 
@@ -40,10 +34,7 @@ class MainActivity : AppCompatActivity() {
                 || super.onSupportNavigateUp()
     }
 
-    private fun computeWindowSizeClasses() {
-//        val metrics = WindowMetricsCalculator.
-    }
+
 }
 
 
-enum class WindowSizeClass { COMPACT, MEDIUM, EXPANDED }
