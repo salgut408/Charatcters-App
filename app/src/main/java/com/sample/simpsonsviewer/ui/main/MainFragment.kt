@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sample.simpsonsviewer.databinding.FragmentMainBinding
 import com.sample.simpsonsviewer.domain.domain_models.RelatedTopicModel
@@ -16,8 +17,6 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainFragment : Fragment() {
-
-
 
     private  val mainViewModel by viewModels<MainViewModel>()
     lateinit var simpsonAdapter: ItemAdapter
@@ -41,14 +40,16 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpRecyclerView()
+        simpsonAdapter.setOnItemClickListener {
+            this.findNavController().navigate(
+                MainFragmentDirections.actionMainFragmentToDetailFragment(it)
+            )
+        }
 
         mainViewModel.charactersList.observe(viewLifecycleOwner){
             simpsonAdapter.differ.submitList(it)
         }
 
-        mainViewModel.simpsonModel.observe(viewLifecycleOwner){
-//            binding.footer.text = it.heading.toString()
-        }
 
 
     }

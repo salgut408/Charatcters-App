@@ -19,17 +19,13 @@ class MainActivity : AppCompatActivity() {
        val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-//        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_graph) as NavHostFragment
-//        val navController: NavController = navHostFragment.navController
-
-//        setSupportActionBar(binding.myToolbar)
-
-
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
+        val navController: NavController = navHostFragment.navController
 
     }
-//    override fun onSupportNavigateUp(): Boolean {
-//        val navController = findNavController(androidx.navigation.fragment.R.id.nav_host_fragment_container)
-//        return navController.navigateUp()
-//                || super.onSupportNavigateUp()
-//    }
+    override fun onSupportNavigateUp(): Boolean {
+        val navController = findNavController(androidx.navigation.fragment.R.id.nav_host_fragment_container)
+        return navController.navigateUp()
+                || super.onSupportNavigateUp()
+    }
 }

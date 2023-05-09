@@ -26,6 +26,7 @@ class SimpsonsRepositoryImpl @Inject constructor(
 //            val list = simpsonsApi.getCharacters().body()?.relatedTopics?.map { it?.asDomain() !!}
 //            Log.e("GET_CHARS_REPO_LST", list.toString())
 //            return list!!
+
         } catch (e: Exception){
             Log.e("GET_CHARS_REPOLST", e.message.toString())
         }
@@ -36,7 +37,6 @@ class SimpsonsRepositoryImpl @Inject constructor(
     override suspend fun getSimpsonsModel(): SimpsonsModel {
         try {
             val result = simpsonsApi.getCharacters().body()?.asDomain()!!
-//            Log.e("GET_CHARS_REPO", result.toString())
             return result
         } catch (e: Exception){
             Log.e("GET_CHARS_REPO", e.message.toString())
@@ -53,7 +53,7 @@ class SimpsonsRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getCharactersFromDb(): List<RelatedTopicModel> {
-        var result = listOf<RelatedTopicModel>()
+        var result: List<RelatedTopicModel>
         withContext(Dispatchers.IO){
              result = dao.getAllSavedItems()
 
@@ -61,14 +61,6 @@ class SimpsonsRepositoryImpl @Inject constructor(
         return result
 
     }
-//
-//    override suspend fun getAllNamesDb(): List<String> {
-//        var result = listOf<String>()
-//        withContext(Dispatchers.IO){
-//            result = dao.getAllSavedNames()
-//        }
-//        return result
-//    }
 }
 
 
