@@ -9,6 +9,8 @@
         <!--            type="com.sample.simpsonsviewer.ui.main.MainViewModel" />-->
     </data>
 
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recView"
 

@@ -11,6 +11,7 @@ interface SimpsonsRepository {
     suspend fun getSimpsonsModel(): SimpsonsModel
     suspend fun saveInDatabase()
     suspend fun getCharactersFromDb(): List<RelatedTopicModel>
+    suspend fun searchDb(searchQuery: String): List<RelatedTopicModel>
 //    suspend fun getAllNamesDb(): List<String>
 
 

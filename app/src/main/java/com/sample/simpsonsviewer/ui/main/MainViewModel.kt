@@ -24,6 +24,9 @@ class MainViewModel @Inject constructor(
     val _namesList: MutableLiveData<List<String>> = MutableLiveData()
     val namesList: LiveData<List<String>> get() = _namesList
 
+    private val _searchResponse: MutableLiveData<List<RelatedTopicModel>> = MutableLiveData()
+    val searchResponse: LiveData<List<RelatedTopicModel>> get() = _searchResponse
+
     init {
         getInfoForDb()
         getModelInfo()
@@ -49,6 +52,12 @@ class MainViewModel @Inject constructor(
         Log.e("VM-List", list.toString())
         _charactersList.postValue(list)
         _namesList.postValue(getNames(list))
+
+    }
+
+    fun searchDb(searchQuery: String) = viewModelScope.launch {
+        val results = simpsonsRepository.searchDb(searchQuery)
+        _searchResponse.postValue(results)
 
     }
 
