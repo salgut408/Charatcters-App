@@ -34,7 +34,7 @@ class TwoPanelAdapter(
         }
 
     }
-    val dataSetDiffer = AsyncListDiffer(this, differCallBack)
+    val differ = AsyncListDiffer(this, differCallBack)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         return ItemViewHolder(
@@ -46,7 +46,7 @@ class TwoPanelAdapter(
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        val item = dataSetDiffer.currentList[position]
+        val item = differ.currentList[position]
         holder.binding.apply {
             itemName.text = item.name
             itemName.setOnClickListener {
@@ -64,6 +64,6 @@ class TwoPanelAdapter(
     }
 
     override fun getItemCount(): Int {
-        return dataSetDiffer.currentList.size
+        return differ.currentList.size
     }
 }

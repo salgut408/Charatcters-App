@@ -12,7 +12,9 @@ import com.sample.simpsonsviewer.domain.domain_models.RelatedTopicModel
 
 class ItemAdapter(): RecyclerView.Adapter< ItemAdapter.ItemViewHolder>() {
 
-    inner class ItemViewHolder(val binding: ItemPreviewBinding): RecyclerView.ViewHolder(binding.root) {}
+    inner class ItemViewHolder(val binding: ItemPreviewBinding): RecyclerView.ViewHolder(binding.root) {
+
+    }
 
     private val differCallBack = object : DiffUtil.ItemCallback<RelatedTopicModel>() {
         override fun areItemsTheSame(

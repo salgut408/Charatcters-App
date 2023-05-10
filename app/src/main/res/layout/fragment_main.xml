@@ -9,36 +9,9 @@
 <!--            type="com.sample.simpsonsviewer.ui.main.MainViewModel" />-->
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/main"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".ui.main.MainFragment">
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/etSearch"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/i_m_looking_for"
-            app:startIconDrawable="@drawable/ic_baseline_search_24"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/textInputEditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:imeOptions="actionSearch"
-                android:inputType="text"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recView"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -46,9 +19,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/etSearch"
-            tools:listitem="@layout/item_preview">
+            tools:listitem="@layout/item_preview"
+            >
 
         </androidx.recyclerview.widget.RecyclerView>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>
