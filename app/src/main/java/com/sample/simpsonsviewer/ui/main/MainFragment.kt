@@ -32,34 +32,6 @@ class MainFragment : AbstractListDetailFragment() {
 
 
 
-
-
-//    Normal situation...
-//
-//    override fun onCreateView(
-//        inflater: LayoutInflater,
-//        container: ViewGroup?,
-//        savedInstanceState: Bundle?
-//    ): View {
-//        _binding = FragmentMainBinding.inflate(inflater, container, false)
-//        val root : View = binding.root
-//        return root
-//    }
-//
-//
-//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        super.onViewCreated(view, savedInstanceState)
-//        setUpRecyclerView()
-//        simpsonAdapter.setOnItemClickListener {
-//            this.findNavController().navigate(
-//                MainFragmentDirections.actionMainFragmentToDetailFragment(it)
-//            )
-//        }
-//        mainViewModel.charactersList.observe(viewLifecycleOwner){
-//            simpsonAdapter.differ.submitList(it)
-//        }
-//    }
-
     private fun setUpRecyclerView() {
         simpsonAdapter = ItemAdapter()
         binding.recView.apply {
@@ -102,13 +74,7 @@ class MainFragment : AbstractListDetailFragment() {
             null,
             NavOptions.Builder()
                 .setPopUpTo(detailNavController.graph.startDestinationId, true)
-                .apply {
-                    if (slidingPaneLayout.isOpen) {
-//                        setEnterAnim(R.anim.nav_default_enter_anim)
-//                        setExitAnim(R.anim.nav_default_exit_anim)
 
-                    }
-                }
                 .build()
         )
         slidingPaneLayout.open()

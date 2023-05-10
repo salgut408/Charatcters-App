@@ -16,6 +16,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withC
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.sample.simpsonsviewer.R
+import com.sample.simpsonsviewer.data.constants.Constants.Companion.BASE_IMAGE_URL
 import com.sample.simpsonsviewer.databinding.FragmentDetailBinding
 import com.sample.simpsonsviewer.domain.domain_models.RelatedTopicModel
 import java.io.IOException
@@ -45,8 +46,10 @@ class DetailFragment : Fragment() {
             character = args
         }
             try {
+                Log.d("BASE_URL", BASE_IMAGE_URL + character.icon)
+
                 Glide.with(this)
-                    .load(character.firstURL)
+                    .load(BASE_IMAGE_URL + character.icon)
                     .fitCenter()
                     .listener(object : RequestListener<Drawable> {
                         override fun onLoadFailed(
