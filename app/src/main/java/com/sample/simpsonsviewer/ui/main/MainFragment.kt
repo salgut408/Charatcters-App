@@ -18,13 +18,16 @@ import com.sample.simpsonsviewer.domain.domain_models.RelatedTopicModel
 import com.sample.simpsonsviewer.ui.main.adapters.ItemAdapter
 import com.sample.simpsonsviewer.ui.main.adapters.TwoPanelAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainFragment : AbstractListDetailFragment() {
 
     private  val mainViewModel by viewModels<MainViewModel>()
     lateinit var simpsonAdapter: ItemAdapter
-    lateinit var twoPaneAdapter: TwoPanelAdapter
 
     private var _binding: ListPaneBinding? = null
     private val binding get() = _binding!!
@@ -47,11 +50,27 @@ class MainFragment : AbstractListDetailFragment() {
             this.findNavController().navigate(
                 MainFragmentDirections.actionMainFragmentToDetailFragment(it)
             )
-
         }
+        var job: Job? = null
+        binding.etSearch.addOnEditTextAttachedListener { editable ->
+            job?.cancel()
+            job = MainScope().launch {
+                delay(100)
+                editable?.let {
+                    if(editable.toString().isNotEmpty()) {
+                        mainViewModel.searchDb(editable.toString())
+                    }
+                }
+            }
+        }
+//        mainViewModel.searchResponse.observe(viewLifecycleOwner) {response ->
+//            simpsonAdapter.differ.submitList(response)
+//        }
+
         mainViewModel.charactersList.observe(viewLifecycleOwner){
             simpsonAdapter.differ.submitList(it)
         }
+
 
     }
 

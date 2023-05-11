@@ -63,7 +63,11 @@ class SimpsonsRepositoryImpl @Inject constructor(
     }
 
     override suspend fun searchDb(searchQuery: String): List<RelatedTopicModel> {
-        return dao.searchDb(searchQuery)
+        var result: List<RelatedTopicModel>
+        withContext(Dispatchers.IO){
+            result = dao.searchDb(searchQuery)
+        }
+        return result
     }
 }
 
