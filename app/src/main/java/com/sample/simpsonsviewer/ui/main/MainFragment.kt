@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavOptions
@@ -49,16 +50,18 @@ class MainFragment : AbstractListDetailFragment() {
 
 
         var job: Job? = null
+
+//        binding.etSearch.addOnEditTextAttachedListener { txtInputLayout ->
+//            txtInputLayout.
+//        }
+
         binding.etSearch.addOnEditTextAttachedListener { editable ->
             job?.cancel()
             job = MainScope().launch {
                 delay(6000)
-                editable?.let {
+                editable.editText?.text?.let {
                     if (editable.toString().isNotEmpty()) {
-                        mainViewModel.searchDb(editable.editText.toString())
-
-//                        Log.d("TXT_SEARCH",  mainViewModel.searchDb("gut").toString())
-                        Log.d("TXT_SEARCH",  editable.toString())
+                        mainViewModel.searchDb(it.toString())
 
                         simpsonAdapter.differ.submitList(mainViewModel.searchResponse.value)
 

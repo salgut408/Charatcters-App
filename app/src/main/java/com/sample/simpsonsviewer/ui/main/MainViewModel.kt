@@ -59,13 +59,17 @@ class MainViewModel @Inject constructor(
 //WORKING
     suspend fun searchDb(searchQuery: String) = viewModelScope.launch(){
 
-       val results =  simpsonsRepository.searchDb("simp")
-
+       val results =  simpsonsRepository.searchDb(searchQuery)
 
         _searchResponse.postValue(results)
         Log.e("VM_SEARCH", results.toString())
 
 
+    }
+
+    suspend fun onSearchEntered(searchQuery: String) = viewModelScope .launch{
+      val result =  simpsonsRepository.searchDb(searchQuery)
+        _charactersList.postValue(result)
     }
 
     fun getInfoForDb() = viewModelScope.launch {
