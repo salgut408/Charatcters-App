@@ -53,11 +53,18 @@ class MainViewModel @Inject constructor(
         _charactersList.postValue(list)
         _namesList.postValue(getNames(list))
 
-    }
 
-    fun searchDb(searchQuery: String) = viewModelScope.launch {
-        val results = simpsonsRepository.searchDb(searchQuery)
+
+    }
+//WORKING
+    suspend fun searchDb(searchQuery: String) = viewModelScope.launch(){
+
+       val results =  simpsonsRepository.searchDb("simp")
+
+
         _searchResponse.postValue(results)
+        Log.e("VM_SEARCH", results.toString())
+
 
     }
 
@@ -65,8 +72,5 @@ class MainViewModel @Inject constructor(
         simpsonsRepository.saveInDatabase()
     }
 
-    fun callNamesList() = viewModelScope.launch {
-//        simpsonsRepository.getAllNamesDb()
-    }
 
 }

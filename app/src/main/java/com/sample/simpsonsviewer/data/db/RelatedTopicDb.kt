@@ -1,5 +1,6 @@
 package com.sample.simpsonsviewer.data.db
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.sample.simpsonsviewer.domain.domain_models.IconModel
@@ -12,7 +13,7 @@ data class RelatedTopicDb(
     val result: String ,
     @PrimaryKey(autoGenerate = false)
     val text: String,
-    val name: String
+    @ColumnInfo val name: String
 
 )
 

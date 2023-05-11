@@ -66,6 +66,8 @@ class SimpsonsRepositoryImpl @Inject constructor(
         var result: List<RelatedTopicModel>
         withContext(Dispatchers.IO){
             result = dao.searchDb(searchQuery)
+            Log.e("SEARCH_REPOS", result.toString())
+
         }
         return result
     }

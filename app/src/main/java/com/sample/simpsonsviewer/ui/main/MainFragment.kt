@@ -1,6 +1,7 @@
 package com.sample.simpsonsviewer.ui.main
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,7 +27,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class MainFragment : AbstractListDetailFragment() {
 
-    private  val mainViewModel by viewModels<MainViewModel>()
+    private val mainViewModel by viewModels<MainViewModel>()
     lateinit var simpsonAdapter: ItemAdapter
 
     private var _binding: ListPaneBinding? = null
@@ -35,55 +36,62 @@ class MainFragment : AbstractListDetailFragment() {
 
 
 
-    private fun setUpRecyclerView() {
-        simpsonAdapter = ItemAdapter()
-        binding.recView.apply {
-          adapter = simpsonAdapter
-            layoutManager = LinearLayoutManager(this.context)
-        }
-    }
-
     override fun onListPaneViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onListPaneViewCreated(view, savedInstanceState)
-                setUpRecyclerView()
+        setUpRecyclerView()
+
+
         simpsonAdapter.setOnItemClickListener {
             this.findNavController().navigate(
                 MainFragmentDirections.actionMainFragmentToDetailFragment(it)
             )
         }
+
+
         var job: Job? = null
         binding.etSearch.addOnEditTextAttachedListener { editable ->
             job?.cancel()
             job = MainScope().launch {
-                delay(100)
+                delay(6000)
                 editable?.let {
-                    if(editable.toString().isNotEmpty()) {
-                        mainViewModel.searchDb(editable.toString())
+                    if (editable.toString().isNotEmpty()) {
+                        mainViewModel.searchDb(editable.editText.toString())
+
+//                        Log.d("TXT_SEARCH",  mainViewModel.searchDb("gut").toString())
+                        Log.d("TXT_SEARCH",  editable.toString())
+
+                        simpsonAdapter.differ.submitList(mainViewModel.searchResponse.value)
+
                     }
                 }
             }
         }
-//        mainViewModel.searchResponse.observe(viewLifecycleOwner) {response ->
-//            simpsonAdapter.differ.submitList(response)
-//        }
+        mainViewModel.searchResponse.observe(viewLifecycleOwner) {response ->
+            if (response.isEmpty()){
+                Log.e("VMFRAG", "respempty")
+            } else {
+                simpsonAdapter.differ.submitList(response)
 
-        mainViewModel.charactersList.observe(viewLifecycleOwner){
-            simpsonAdapter.differ.submitList(it)
+            }
         }
 
-
+        mainViewModel.charactersList.observe(viewLifecycleOwner) {
+            simpsonAdapter.differ.submitList(it)
+        }
     }
+
+
 
     override fun onCreateListPaneView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-                _binding = ListPaneBinding.inflate(inflater, container, false)
+        _binding = ListPaneBinding.inflate(inflater, container, false)
+
 
         return binding.root
     }
-
 
 
     private fun openDetails(destinationId: Int) {
@@ -97,6 +105,14 @@ class MainFragment : AbstractListDetailFragment() {
                 .build()
         )
         slidingPaneLayout.open()
+    }
+
+    private fun setUpRecyclerView() {
+        simpsonAdapter = ItemAdapter()
+        binding.recView.apply {
+            adapter = simpsonAdapter
+            layoutManager = LinearLayoutManager(this.context)
+        }
     }
 
 
