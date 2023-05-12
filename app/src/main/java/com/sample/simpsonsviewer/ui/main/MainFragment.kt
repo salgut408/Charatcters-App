@@ -3,16 +3,11 @@ package com.sample.simpsonsviewer.ui.main
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
-import android.widget.EditText
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.AbstractListDetailFragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,7 +16,6 @@ import com.sample.simpsonsviewer.ui.main.adapters.ItemAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -50,25 +44,21 @@ class MainFragment : AbstractListDetailFragment() {
             }
         }
 
-//        itemAdapter.differ.submitList(mainViewModel.listUiState.value.currentList)
-
         var job: Job? = null
-
-
-        binding.etSearch.addOnEditTextAttachedListener { editable ->
-            job?.cancel()
-            job = MainScope().launch {
-                delay(3000)
-                editable.editText?.text?. let {
-                    if (editable.editText!!.text.isNotEmpty() && !mainViewModel.listUiState.value.loading) {
-                        mainViewModel.searchDb(it.toString())
-                    }
+        binding.etSearch.editText?.addTextChangedListener(object : TextWatcher {
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                job?.cancel()
+                job = MainScope().launch {
+                    mainViewModel.searchDb( binding.etSearch.editText!!.text.toString())
                 }
             }
-        }
+            override fun afterTextChanged(p0: Editable?) {
 
+            }
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+        })
     }
-
 
     override fun onCreateListPaneView(
         inflater: LayoutInflater,
@@ -86,7 +76,4 @@ class MainFragment : AbstractListDetailFragment() {
             layoutManager = LinearLayoutManager(this.context)
         }
     }
-
-
-
 }

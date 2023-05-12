@@ -1,12 +1,15 @@
 package com.sample.simpsonsviewer.ui.main
 
 import android.util.Log
-import androidx.lifecycle.*
-import com.sample.simpsonsviewer.domain.domain_models.RelatedTopicModel
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.sample.simpsonsviewer.domain.repositories.SimpsonsRepository
 import com.sample.simpsonsviewer.domain.use_cases.GetCharactersListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -16,7 +19,7 @@ class MainViewModel @Inject constructor(
     private val getCharactersListUseCase: GetCharactersListUseCase
 ) : ViewModel() {
 
-    private val _listUiState = MutableStateFlow(ListUiState(loading = true, currentList = listOf()))
+    private val _listUiState = MutableStateFlow(ListUiState(loading = true,))
     val listUiState: StateFlow<ListUiState> = _listUiState.asStateFlow()
 
     init {
