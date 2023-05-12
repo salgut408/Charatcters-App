@@ -8,6 +8,4 @@ import retrofit2.http.GET
 interface SimpsonsApi {
     @GET("?q=simpsons+characters&format=json")
     suspend fun getCharacters(): Response<SimpsonsResponse>
-
-
 }

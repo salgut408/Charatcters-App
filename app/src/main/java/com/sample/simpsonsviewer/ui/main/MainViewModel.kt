@@ -1,6 +1,5 @@
 package com.sample.simpsonsviewer.ui.main
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sample.simpsonsviewer.domain.repositories.SimpsonsRepository
@@ -29,15 +28,12 @@ class MainViewModel @Inject constructor(
     suspend fun searchDb(searchQuery: String) = viewModelScope.launch() {
         simpsonsRepository.searchDbFlow(searchQuery).collectLatest { newItems ->
             _listUiState.emit(ListUiState(loading = false, currentList = newItems))
-            Log.e("VM_SEARCH_FLOW", _listUiState.value.toString())
         }
     }
-
 
     private fun loadList() = viewModelScope.launch{
         getCharactersListUseCase.invoke().collectLatest { allItems ->
             _listUiState .emit(ListUiState(loading = false, currentList = allItems))
-            Log.d("FLOW_VM", _listUiState.value .toString())
         }
     }
 }
