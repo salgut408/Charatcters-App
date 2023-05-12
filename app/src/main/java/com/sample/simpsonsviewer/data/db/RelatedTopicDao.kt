@@ -16,7 +16,7 @@ interface RelatedTopicDao {
     @Query("SELECT * FROM simpsons_table")
     fun getAllSavedItems():List<RelatedTopicModel>
 
-    @Query("SELECT * FROM simpsons_table WHERE name LIKE '%' || :searchQuery || '%'")
+    @Query("SELECT * FROM simpsons_table WHERE name OR text LIKE '%' || :searchQuery || '%' ORDER BY name")
     fun searchDb(searchQuery: String): List<RelatedTopicModel>
 
 

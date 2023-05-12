@@ -5,6 +5,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.widget.EditText
 import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -23,6 +25,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -51,24 +55,27 @@ class MainFragment : AbstractListDetailFragment() {
 
         var job: Job? = null
 
-//        binding.etSearch.addOnEditTextAttachedListener { txtInputLayout ->
-//            txtInputLayout.
-//        }
+
+        binding.etSearch
 
         binding.etSearch.addOnEditTextAttachedListener { editable ->
             job?.cancel()
             job = MainScope().launch {
-                delay(6000)
-                editable.editText?.text?.let {
-                    if (editable.toString().isNotEmpty()) {
+                delay(3000)
+                editable.editText?.text?. let {
+//                    if()
+                    if (editable.editText!!.isFocused) {
                         mainViewModel.searchDb(it.toString())
-
                         simpsonAdapter.differ.submitList(mainViewModel.searchResponse.value)
-
                     }
                 }
             }
         }
+
+        mainViewModel.apply {
+
+        }
+
         mainViewModel.searchResponse.observe(viewLifecycleOwner) {response ->
             if (response.isEmpty()){
                 Log.e("VMFRAG", "respempty")
@@ -77,6 +84,8 @@ class MainFragment : AbstractListDetailFragment() {
 
             }
         }
+
+
 
         mainViewModel.charactersList.observe(viewLifecycleOwner) {
             simpsonAdapter.differ.submitList(it)
@@ -97,18 +106,6 @@ class MainFragment : AbstractListDetailFragment() {
     }
 
 
-    private fun openDetails(destinationId: Int) {
-        val detailNavController = detailPaneNavHostFragment.navController
-        detailNavController.navigate(
-            destinationId,
-            null,
-            NavOptions.Builder()
-                .setPopUpTo(detailNavController.graph.startDestinationId, true)
-
-                .build()
-        )
-        slidingPaneLayout.open()
-    }
 
     private fun setUpRecyclerView() {
         simpsonAdapter = ItemAdapter()
@@ -118,6 +115,18 @@ class MainFragment : AbstractListDetailFragment() {
         }
     }
 
+
+    fun EditText.onSubmit(func: (String) -> Unit, str: String) {
+        setOnEditorActionListener { _, actionId, _ ->
+
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                func(str)
+            }
+
+            true
+
+        }
+    }
 
 }
 

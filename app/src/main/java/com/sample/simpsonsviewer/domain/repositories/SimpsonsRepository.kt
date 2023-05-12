@@ -7,12 +7,9 @@ import com.sample.simpsonsviewer.domain.domain_models.SimpsonsModel
 import kotlinx.coroutines.flow.Flow
 
 interface SimpsonsRepository {
-    suspend fun getSimpsonsList():List<RelatedTopicModel>
-    suspend fun getSimpsonsModel(): SimpsonsModel
     suspend fun saveInDatabase()
     suspend fun getCharactersFromDb(): List<RelatedTopicModel>
     suspend fun searchDb(searchQuery: String): List<RelatedTopicModel>
-//    suspend fun getAllNamesDb(): List<String>
 
 
 }

@@ -21,29 +21,7 @@ class SimpsonsRepositoryImpl @Inject constructor(
     val simpsonsDatabase: SimpsonsDatabase,
     val dao: RelatedTopicDao
 ): SimpsonsRepository {
-    override suspend fun getSimpsonsList(): List<RelatedTopicModel> {
-        try {
-//            val list = simpsonsApi.getCharacters().body()?.relatedTopics?.map { it?.asDomain() !!}
-//            Log.e("GET_CHARS_REPO_LST", list.toString())
-//            return list!!
 
-        } catch (e: Exception){
-            Log.e("GET_CHARS_REPOLST", e.message.toString())
-        }
-//        return simpsonsApi.getCharacters().body()?.relatedTopics?.map { it?.asDomain() !! }!!
-        return listOf<RelatedTopicModel>()
-    }
-
-    override suspend fun getSimpsonsModel(): SimpsonsModel {
-        try {
-            val result = simpsonsApi.getCharacters().body()?.asDomain()!!
-            return result
-        } catch (e: Exception){
-            Log.e("GET_CHARS_REPO", e.message.toString())
-        }
-        val result = simpsonsApi.getCharacters().body()?.asDomain()!!
-        return result
-    }
 
     override suspend fun saveInDatabase() {
         withContext(Dispatchers.IO){
@@ -56,10 +34,8 @@ class SimpsonsRepositoryImpl @Inject constructor(
         var result: List<RelatedTopicModel>
         withContext(Dispatchers.IO){
              result = dao.getAllSavedItems()
-
         }
         return result
-
     }
 
     override suspend fun searchDb(searchQuery: String): List<RelatedTopicModel> {
@@ -67,7 +43,6 @@ class SimpsonsRepositoryImpl @Inject constructor(
         withContext(Dispatchers.IO){
             result = dao.searchDb(searchQuery)
             Log.e("SEARCH_REPOS", result.toString())
-
         }
         return result
     }
