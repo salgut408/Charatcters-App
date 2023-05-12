@@ -9,7 +9,7 @@ import androidx.room.RoomDatabase
     exportSchema = false
 )
 
-abstract class SimpsonsDatabase(): RoomDatabase() {
+abstract class CharacterDatabase(): RoomDatabase() {
 
     abstract fun getDao(): RelatedTopicDao
 }

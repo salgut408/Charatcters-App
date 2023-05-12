@@ -1,24 +1,19 @@
 package com.sample.simpsonsviewer.data.repository
 
-import android.util.Log
-import androidx.lifecycle.LiveData
 import com.sample.simpsonsviewer.data.db.RelatedTopicDao
-import com.sample.simpsonsviewer.data.db.SimpsonsDatabase
+import com.sample.simpsonsviewer.data.db.CharacterDatabase
 import com.sample.simpsonsviewer.data.remote.api_service.SimpsonsApi
 import com.sample.simpsonsviewer.data.remote.network_responses.asDomain
 import com.sample.simpsonsviewer.domain.domain_models.RelatedTopicModel
-import com.sample.simpsonsviewer.domain.domain_models.SimpsonsModel
 import com.sample.simpsonsviewer.domain.domain_models.asDb
 import com.sample.simpsonsviewer.domain.repositories.SimpsonsRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class SimpsonsRepositoryImpl @Inject constructor(
     val simpsonsApi: SimpsonsApi,
-    val simpsonsDatabase: SimpsonsDatabase,
     val dao: RelatedTopicDao
 ): SimpsonsRepository {
 

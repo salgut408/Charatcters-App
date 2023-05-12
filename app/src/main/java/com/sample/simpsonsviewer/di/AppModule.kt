@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.sample.simpsonsviewer.data.constants.Constants.Companion.BASE_URL
 import com.sample.simpsonsviewer.data.db.RelatedTopicDao
-import com.sample.simpsonsviewer.data.db.SimpsonsDatabase
+import com.sample.simpsonsviewer.data.db.CharacterDatabase
 import com.sample.simpsonsviewer.data.remote.api_service.SimpsonsApi
 import com.sample.simpsonsviewer.data.repository.SimpsonsRepositoryImpl
 import com.sample.simpsonsviewer.domain.repositories.SimpsonsRepository
@@ -17,7 +17,6 @@ import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
 import javax.inject.Singleton
 
 
@@ -26,7 +25,7 @@ import javax.inject.Singleton
 object AppModule {
 
     @Provides
-    fun provideDao(simpsonsDatabase: SimpsonsDatabase): RelatedTopicDao = simpsonsDatabase.getDao()
+    fun provideDao(simpsonsDatabase: CharacterDatabase): RelatedTopicDao = simpsonsDatabase.getDao()
 
     @Provides
     fun provideCharactersListUseCase(
@@ -39,17 +38,16 @@ object AppModule {
     @Provides
     fun provideSimpsonsRepository(
         simpsonsApi: SimpsonsApi,
-        simpsonsDatabase: SimpsonsDatabase,
         relatedTopicDao: RelatedTopicDao
-    ): SimpsonsRepository = SimpsonsRepositoryImpl(simpsonsApi, simpsonsDatabase, relatedTopicDao)
+    ): SimpsonsRepository = SimpsonsRepositoryImpl(simpsonsApi,  relatedTopicDao)
 
 
     @Singleton
     @Provides
-    fun provideDb(@ApplicationContext context: Context): SimpsonsDatabase =
+    fun provideDb(@ApplicationContext context: Context): CharacterDatabase =
         Room.databaseBuilder(
             context,
-            SimpsonsDatabase::class.java,
+            CharacterDatabase::class.java,
             "simpson_db"
         ).fallbackToDestructiveMigration()
             .build()
