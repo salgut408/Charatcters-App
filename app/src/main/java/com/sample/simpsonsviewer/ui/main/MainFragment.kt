@@ -1,6 +1,8 @@
 package com.sample.simpsonsviewer.ui.main
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +10,9 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.AbstractListDetailFragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -29,12 +34,9 @@ class MainFragment : AbstractListDetailFragment() {
     private val binding get() = _binding!!
 
 
-
-
     override fun onListPaneViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onListPaneViewCreated(view, savedInstanceState)
         setUpRecyclerView()
-
 
         itemAdapter.setOnItemClickListener {
             this.findNavController().navigate(
@@ -42,41 +44,30 @@ class MainFragment : AbstractListDetailFragment() {
             )
         }
 
-        itemAdapter.differ.submitList(mainViewModel.listUiState.value.currentList)
+        viewLifecycleOwner.lifecycleScope.launch {
+            mainViewModel.listUiState.collect{items ->
+                itemAdapter.differ.submitList(items.currentList)
+            }
+        }
 
-
+//        itemAdapter.differ.submitList(mainViewModel.listUiState.value.currentList)
 
         var job: Job? = null
 
-
-        binding.etSearch
 
         binding.etSearch.addOnEditTextAttachedListener { editable ->
             job?.cancel()
             job = MainScope().launch {
                 delay(3000)
                 editable.editText?.text?. let {
-//                    if()
-                    if (editable.editText!!.text.isNotEmpty()) {
+                    if (editable.editText!!.text.isNotEmpty() && !mainViewModel.listUiState.value.loading) {
                         mainViewModel.searchDb(it.toString())
                     }
-
                 }
             }
         }
 
-
-
-
-
-//        mainViewModel.charactersList.observe(viewLifecycleOwner) {
-//            itemAdapter.differ.submitList(it)
-//        }
-//        itemAdapter.differ.submitList(mainViewModel.listUiState.value.currentList)
-
-
     }
-
 
 
     override fun onCreateListPaneView(
@@ -85,12 +76,8 @@ class MainFragment : AbstractListDetailFragment() {
         savedInstanceState: Bundle?,
     ): View {
         _binding = ListPaneBinding.inflate(inflater, container, false)
-
-
         return binding.root
     }
-
-
 
     private fun setUpRecyclerView() {
         itemAdapter = ItemAdapter()
@@ -101,50 +88,5 @@ class MainFragment : AbstractListDetailFragment() {
     }
 
 
-    fun EditText.onSubmit(func: (String) -> Unit, str: String) {
-        setOnEditorActionListener { _, actionId, _ ->
-
-            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                func(str)
-            }
-
-            true
-
-        }
-    }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

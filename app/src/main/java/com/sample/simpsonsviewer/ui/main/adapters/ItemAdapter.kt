@@ -21,7 +21,7 @@ class ItemAdapter(): RecyclerView.Adapter< ItemAdapter.ItemViewHolder>() {
             oldItem: RelatedTopicModel,
             newItem: RelatedTopicModel
         ): Boolean {
-            return oldItem.text == newItem.text
+            return oldItem.name == newItem.name
         }
 
         override fun areContentsTheSame(

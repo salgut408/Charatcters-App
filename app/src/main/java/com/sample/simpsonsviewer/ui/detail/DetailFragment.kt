@@ -35,7 +35,6 @@ class DetailFragment : Fragment() {
         val character = DetailFragmentArgs.fromBundle(requireArguments()).itemArd
         binding.name.text = character?.name
         binding.description.text = character?.text
-//        binding.description.setText(Html.fromHtml(character?.result))
         return binding.root
     }
 
@@ -62,10 +61,8 @@ class DetailFragment : Fragment() {
                             target: Target<Drawable>?,
                             isFirstResource: Boolean
                         ): Boolean {
-                            Log.e("Tag", e.toString())
                             return  false
                         }
-
                         override fun onResourceReady(
                             resource: Drawable?,
                             model: Any?,

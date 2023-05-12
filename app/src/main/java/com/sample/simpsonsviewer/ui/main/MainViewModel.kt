@@ -30,14 +30,10 @@ class MainViewModel @Inject constructor(
         }
     }
 
-//    suspend fun onSearchEntered(searchQuery: String) {
-//        val result = simpsonsRepository.searchDb(searchQuery)
-//    }
 
-
-    fun loadList() = viewModelScope.launch{
+    private fun loadList() = viewModelScope.launch{
         getCharactersListUseCase.invoke().collectLatest { allItems ->
-            _listUiState.emit(ListUiState(loading = false, currentList = allItems))
+            _listUiState .emit(ListUiState(loading = false, currentList = allItems))
             Log.d("FLOW_VM", _listUiState.value .toString())
         }
     }
