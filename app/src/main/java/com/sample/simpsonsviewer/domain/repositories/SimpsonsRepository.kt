@@ -8,8 +8,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface SimpsonsRepository {
     suspend fun saveInDatabase()
-    suspend fun getCharactersFromDb(): List<RelatedTopicModel>
-    suspend fun searchDb(searchQuery: String): List<RelatedTopicModel>
     suspend fun getCharactersFromDbFlow(): Flow<List<RelatedTopicModel>>
     suspend fun searchDbFlow(searchQuery: String): Flow<List<RelatedTopicModel>>
 

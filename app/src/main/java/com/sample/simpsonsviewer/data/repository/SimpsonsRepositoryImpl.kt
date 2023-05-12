@@ -30,22 +30,6 @@ class SimpsonsRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getCharactersFromDb(): List<RelatedTopicModel> {
-        val result: List<RelatedTopicModel>
-        withContext(Dispatchers.IO){
-             result = dao.getAllSavedItems()
-        }
-        return result
-    }
-
-    override suspend fun searchDb(searchQuery: String): List<RelatedTopicModel> {
-        var result: List<RelatedTopicModel>
-        withContext(Dispatchers.IO){
-            result = dao.searchDb(searchQuery)
-        }
-        return result
-    }
-
     override suspend fun getCharactersFromDbFlow(): Flow<List<RelatedTopicModel>> {
         val result: Flow<List<RelatedTopicModel>>
         withContext(Dispatchers.IO){

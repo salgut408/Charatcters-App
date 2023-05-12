@@ -9,7 +9,6 @@ import com.sample.simpsonsviewer.data.remote.api_service.SimpsonsApi
 import com.sample.simpsonsviewer.data.repository.SimpsonsRepositoryImpl
 import com.sample.simpsonsviewer.domain.repositories.SimpsonsRepository
 import com.sample.simpsonsviewer.domain.use_cases.GetCharactersListUseCase
-import com.sample.simpsonsviewer.domain.use_cases.SearchCharactersUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -34,10 +33,7 @@ object AppModule {
         simpsonsRepository: SimpsonsRepository,
     ): GetCharactersListUseCase = GetCharactersListUseCase(simpsonsRepository)
 
-    @Provides
-    fun provideSearchCharactersListUseCase(
-        simpsonsRepository: SimpsonsRepository,
-    ): SearchCharactersUseCase = SearchCharactersUseCase(simpsonsRepository)
+
 
 
     @Provides

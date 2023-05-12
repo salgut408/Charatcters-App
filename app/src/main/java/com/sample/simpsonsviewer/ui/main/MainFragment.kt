@@ -42,6 +42,9 @@ class MainFragment : AbstractListDetailFragment() {
             )
         }
 
+        itemAdapter.differ.submitList(mainViewModel.listUiState.value.currentList)
+
+
 
         var job: Job? = null
 
@@ -51,34 +54,27 @@ class MainFragment : AbstractListDetailFragment() {
         binding.etSearch.addOnEditTextAttachedListener { editable ->
             job?.cancel()
             job = MainScope().launch {
-                delay(3500)
+                delay(3000)
                 editable.editText?.text?. let {
 //                    if()
                     if (editable.editText!!.text.isNotEmpty()) {
                         mainViewModel.searchDb(it.toString())
-
                     }
+
                 }
             }
         }
 
-        itemAdapter.differ.submitList(mainViewModel.listUiState.value.currentList)
 
 
-//        mainViewModel.searchResponse.observe(viewLifecycleOwner) {response ->
-//            if (response.isEmpty()){
-//                Log.e("VMFRAG", "respempty")
-//            } else {
-//                itemAdapter.differ.submitList(response)
-//
-//            }
+
+
+//        mainViewModel.charactersList.observe(viewLifecycleOwner) {
+//            itemAdapter.differ.submitList(it)
 //        }
+//        itemAdapter.differ.submitList(mainViewModel.listUiState.value.currentList)
 
 
-
-        mainViewModel.charactersList.observe(viewLifecycleOwner) {
-            itemAdapter.differ.submitList(it)
-        }
     }
 
 

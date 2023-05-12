@@ -14,14 +14,8 @@ interface RelatedTopicDao {
     suspend fun insert(items: List<RelatedTopicDb>): List<Long>
 
     @Query("SELECT * FROM simpsons_table")
-    fun getAllSavedItems():List<RelatedTopicModel>
-
-    @Query("SELECT * FROM simpsons_table WHERE name OR text LIKE '%' || :searchQuery || '%'")
-    fun searchDb(searchQuery: String): List<RelatedTopicModel>
-
-    @Query("SELECT * FROM simpsons_table")
     fun getAllSavedItemsFlow(): Flow<List<RelatedTopicModel>>
 
-    @Query("SELECT * FROM simpsons_table WHERE name OR text LIKE '%' || :searchQuery || '%'")
+    @Query("SELECT * FROM simpsons_table WHERE name LIKE '%' || :searchQuery || '%'")
     fun searchDbFlow(searchQuery: String): Flow<List<RelatedTopicModel>>
 }
