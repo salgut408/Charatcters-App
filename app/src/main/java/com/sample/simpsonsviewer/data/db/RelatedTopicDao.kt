@@ -16,8 +16,12 @@ interface RelatedTopicDao {
     @Query("SELECT * FROM simpsons_table")
     fun getAllSavedItems():List<RelatedTopicModel>
 
-    @Query("SELECT * FROM simpsons_table WHERE name OR text LIKE '%' || :searchQuery || '%' ORDER BY name")
+    @Query("SELECT * FROM simpsons_table WHERE name OR text LIKE '%' || :searchQuery || '%'")
     fun searchDb(searchQuery: String): List<RelatedTopicModel>
 
+    @Query("SELECT * FROM simpsons_table")
+    fun getAllSavedItemsFlow(): Flow<List<RelatedTopicModel>>
 
+    @Query("SELECT * FROM simpsons_table WHERE name OR text LIKE '%' || :searchQuery || '%'")
+    fun searchDbFlow(searchQuery: String): Flow<List<RelatedTopicModel>>
 }

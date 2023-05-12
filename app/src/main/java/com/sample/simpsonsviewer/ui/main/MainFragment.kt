@@ -7,33 +7,23 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
-import androidx.core.view.get
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.NavOptions
 import androidx.navigation.fragment.AbstractListDetailFragment
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.sample.simpsonsviewer.R
-import com.sample.simpsonsviewer.databinding.FragmentMainBinding
 import com.sample.simpsonsviewer.databinding.ListPaneBinding
-import com.sample.simpsonsviewer.domain.domain_models.RelatedTopicModel
 import com.sample.simpsonsviewer.ui.main.adapters.ItemAdapter
-import com.sample.simpsonsviewer.ui.main.adapters.TwoPanelAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainFragment : AbstractListDetailFragment() {
 
     private val mainViewModel by viewModels<MainViewModel>()
-    lateinit var simpsonAdapter: ItemAdapter
+    lateinit var itemAdapter: ItemAdapter
 
     private var _binding: ListPaneBinding? = null
     private val binding get() = _binding!!
@@ -46,7 +36,7 @@ class MainFragment : AbstractListDetailFragment() {
         setUpRecyclerView()
 
 
-        simpsonAdapter.setOnItemClickListener {
+        itemAdapter.setOnItemClickListener {
             this.findNavController().navigate(
                 MainFragmentDirections.actionMainFragmentToDetailFragment(it)
             )
@@ -61,34 +51,33 @@ class MainFragment : AbstractListDetailFragment() {
         binding.etSearch.addOnEditTextAttachedListener { editable ->
             job?.cancel()
             job = MainScope().launch {
-                delay(3000)
+                delay(3500)
                 editable.editText?.text?. let {
 //                    if()
-                    if (editable.editText!!.isFocused) {
+                    if (editable.editText!!.text.isNotEmpty()) {
                         mainViewModel.searchDb(it.toString())
-                        simpsonAdapter.differ.submitList(mainViewModel.searchResponse.value)
+
                     }
                 }
             }
         }
 
-        mainViewModel.apply {
+        itemAdapter.differ.submitList(mainViewModel.listUiState.value.currentList)
 
-        }
 
-        mainViewModel.searchResponse.observe(viewLifecycleOwner) {response ->
-            if (response.isEmpty()){
-                Log.e("VMFRAG", "respempty")
-            } else {
-                simpsonAdapter.differ.submitList(response)
-
-            }
-        }
+//        mainViewModel.searchResponse.observe(viewLifecycleOwner) {response ->
+//            if (response.isEmpty()){
+//                Log.e("VMFRAG", "respempty")
+//            } else {
+//                itemAdapter.differ.submitList(response)
+//
+//            }
+//        }
 
 
 
         mainViewModel.charactersList.observe(viewLifecycleOwner) {
-            simpsonAdapter.differ.submitList(it)
+            itemAdapter.differ.submitList(it)
         }
     }
 
@@ -108,9 +97,9 @@ class MainFragment : AbstractListDetailFragment() {
 
 
     private fun setUpRecyclerView() {
-        simpsonAdapter = ItemAdapter()
+        itemAdapter = ItemAdapter()
         binding.recView.apply {
-            adapter = simpsonAdapter
+            adapter = itemAdapter
             layoutManager = LinearLayoutManager(this.context)
         }
     }

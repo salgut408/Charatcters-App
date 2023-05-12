@@ -25,13 +25,13 @@ class SimpsonsRepositoryImpl @Inject constructor(
 
     override suspend fun saveInDatabase() {
         withContext(Dispatchers.IO){
-            val items = simpsonsApi.getCharacters().body()?.relatedTopics?.map { it?.asDomain() !!}!!
+            val items = simpsonsApi.getCharacters().body()?.relatedTopics?.map { it?.asDomain()!!}!!
             dao.insert(items.map { it.asDb() })
         }
     }
 
     override suspend fun getCharactersFromDb(): List<RelatedTopicModel> {
-        var result: List<RelatedTopicModel>
+        val result: List<RelatedTopicModel>
         withContext(Dispatchers.IO){
              result = dao.getAllSavedItems()
         }
@@ -42,7 +42,22 @@ class SimpsonsRepositoryImpl @Inject constructor(
         var result: List<RelatedTopicModel>
         withContext(Dispatchers.IO){
             result = dao.searchDb(searchQuery)
-            Log.e("SEARCH_REPOS", result.toString())
+        }
+        return result
+    }
+
+    override suspend fun getCharactersFromDbFlow(): Flow<List<RelatedTopicModel>> {
+        val result: Flow<List<RelatedTopicModel>>
+        withContext(Dispatchers.IO){
+            result = dao.getAllSavedItemsFlow()
+        }
+        return result
+    }
+
+    override suspend fun searchDbFlow(searchQuery: String): Flow<List<RelatedTopicModel>> {
+        val result: Flow<List<RelatedTopicModel>>
+        withContext(Dispatchers.IO) {
+            result = dao.searchDbFlow(searchQuery)
         }
         return result
     }

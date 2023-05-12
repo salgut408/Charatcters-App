@@ -46,9 +46,6 @@ class DetailFragment : Fragment() {
         if (args != null) {
             character = args
         }
-            try {
-                Log.d("BASE_URL", BASE_IMAGE_URL + character.icon)
-
                 Glide.with(this)
                     .load(BASE_IMAGE_URL + character.icon)
                     .apply(
@@ -81,10 +78,5 @@ class DetailFragment : Fragment() {
                     })
                     .transition(withCrossFade())
                     .into(binding.imageView)
-            } catch (e: IOException){
-                e.printStackTrace()
-            }
     }
-
-
 }
