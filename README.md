@@ -1,6 +1,8 @@
 # Charatcters-App
 
 ## App has two build variants / product flavors
+
+
 Each variant/product flavor uses different resources to make different API calls. 
 One calls a Simpsons API, another calls a The Wire API to return a list of characters. 
 
