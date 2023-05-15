@@ -1,7 +1,7 @@
 package com.sample.domain.domain_models
 
 
-data class SimpsonsModel(
+data class ResponseModel(
     val abstract: String = "",
     val abstractSource: String = "",
     val abstractText: String = "",

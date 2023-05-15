@@ -30,6 +30,7 @@ class MainFragment : AbstractListDetailFragment() {
 
     override fun onListPaneViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onListPaneViewCreated(view, savedInstanceState)
+
         setUpRecyclerView()
 
         itemAdapter.setOnItemClickListener {

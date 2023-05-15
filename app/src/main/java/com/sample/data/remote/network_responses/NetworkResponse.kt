@@ -3,9 +3,9 @@ package com.sample.data.remote.network_responses
 
 import com.google.gson.annotations.SerializedName
 import com.sample.domain.domain_models.MetaModel
-import com.sample.domain.domain_models.SimpsonsModel
+import com.sample.domain.domain_models.ResponseModel
 
-data class SimpsonsResponse(
+data class NetworkResponse(
     @SerializedName("Abstract")
     val abstract: String? = "",
     @SerializedName("AbstractSource")
@@ -50,8 +50,8 @@ data class SimpsonsResponse(
     val type: String? = ""
 )
 
-fun SimpsonsResponse.asDomain(): SimpsonsModel {
-    return SimpsonsModel(
+fun NetworkResponse.asDomain(): ResponseModel {
+    return ResponseModel(
         abstract = abstract ?: "",
         abstractSource = abstractSource ?: "",
         abstractText = abstractText ?: "",
