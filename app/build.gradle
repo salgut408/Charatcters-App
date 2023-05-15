@@ -10,11 +10,10 @@ plugins {
 }
 
 android {
-    namespace 'com.sample.simpsonsviewer'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.sample.simpsonsviewer"
+        applicationId "com.sample"
         minSdk 21
         targetSdk 33
         versionCode 1
@@ -31,11 +30,24 @@ android {
         dataBinding true
     }
 
+    flavorDimensions "main"
 
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+
+    productFlavors{
+        simpsonsviewer{
+            applicationId = "com.sample.simpsonsviewer"
+            buildConfigField "String", "GET_URL", "\"?q=simpsons+characters&format=json\""
+        }
+        wireviewer{
+            applicationId = "com.sample.wireviewer"
+            buildConfigField "String", "GET_URL", "\"?q=the+wire+characters&format=json\""
         }
     }
     compileOptions {

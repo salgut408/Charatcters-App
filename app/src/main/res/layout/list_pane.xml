@@ -6,7 +6,7 @@
     <data>
         <!--        <variable-->
         <!--            name="viewModel"-->
-        <!--            type="com.sample.simpsonsviewer.ui.main.MainViewModel" />-->
+        <!--            type="com.sample.MainViewModel" />-->
     </data>
 
 

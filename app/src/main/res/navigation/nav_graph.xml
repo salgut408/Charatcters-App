@@ -6,7 +6,7 @@
     app:startDestination="@id/mainFragment">
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.sample.simpsonsviewer.ui.main.MainFragment"
+        android:name="com.sample.ui.main.MainFragment"
         android:label="fragment_main"
         tools:layout="@layout/list_pane" >
         <action
@@ -16,11 +16,11 @@
     </fragment>
     <fragment
         android:id="@+id/detailFragment"
-        android:name="com.sample.simpsonsviewer.ui.detail.DetailFragment"
+        android:name="com.sample.ui.detail.DetailFragment"
         android:label="fragment_detail"
         tools:layout="@layout/fragment_detail" >
         <argument android:name="itemArd"
-            app:argType="com.sample.simpsonsviewer.domain.domain_models.RelatedTopicModel"
+            app:argType="com.sample.domain.domain_models.RelatedTopicModel"
             app:nullable="true" />
     </fragment>
 

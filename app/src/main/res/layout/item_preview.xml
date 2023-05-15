@@ -6,7 +6,7 @@
     <data>
 <!--            <variable-->
 <!--                name="relatedTopic"-->
-<!--                type="com.sample.simpsonsviewer.domain.domain_models.RelatedTopicModel" />-->
+<!--                type="com.sample.RelatedTopicModel" />-->
     </data>
 
 

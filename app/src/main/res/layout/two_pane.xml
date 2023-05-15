@@ -7,7 +7,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/two_pane_container"
-        android:name="com.sample.simpsonsviewer.ui.main.MainFragment"
+        android:name="com.sample.ui.main.MainFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:navGraph="@navigation/nav_graph" />
