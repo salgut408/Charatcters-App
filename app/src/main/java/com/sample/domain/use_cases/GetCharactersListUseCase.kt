@@ -1,7 +1,7 @@
 package com.sample.domain.use_cases
 
 import com.sample.domain.domain_models.RelatedTopicModel
-import com.sample.domain.repositories.SimpsonsRepository
+import com.sample.domain.repositories.CharacterRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -9,7 +9,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class GetCharactersListUseCase @Inject constructor(
-    private val characterRepository: SimpsonsRepository,
+    private val characterRepository: CharacterRepository,
     private val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
 ) {
     suspend operator fun invoke(): Flow<List<RelatedTopicModel>> =

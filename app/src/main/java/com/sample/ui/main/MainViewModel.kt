@@ -2,7 +2,7 @@ package com.sample.ui.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sample.domain.repositories.SimpsonsRepository
+import com.sample.domain.repositories.CharacterRepository
 import com.sample.domain.use_cases.GetCharactersListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val simpsonsRepository: SimpsonsRepository,
+    private val simpsonsRepository: CharacterRepository,
     private val getCharactersListUseCase: GetCharactersListUseCase
 ) : ViewModel() {
 

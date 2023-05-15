@@ -1,25 +1,25 @@
 package com.sample.data.repository
 
 import com.sample.data.db.RelatedTopicDao
-import com.sample.data.remote.api_service.SimpsonsApi
+import com.sample.data.remote.api_service.CharacterApi
 import com.sample.data.remote.network_responses.asDomain
 import com.sample.domain.domain_models.RelatedTopicModel
 import com.sample.domain.domain_models.asDb
-import com.sample.domain.repositories.SimpsonsRepository
+import com.sample.domain.repositories.CharacterRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class SimpsonsRepositoryImpl @Inject constructor(
-    val simpsonsApi: SimpsonsApi,
+class CharacterRepositoryImpl @Inject constructor(
+    val characterApi: CharacterApi,
     val dao: RelatedTopicDao
-): SimpsonsRepository {
+): CharacterRepository {
 
 
     override suspend fun saveInDatabase() {
         withContext(Dispatchers.IO){
-            val items = simpsonsApi.getCharacters().body()?.relatedTopics?.map { it?.asDomain()!!}!!
+            val items = characterApi.getCharacters().body()?.relatedTopics?.map { it?.asDomain()!!}!!
             dao.insert(items.map { it.asDb() })
         }
     }

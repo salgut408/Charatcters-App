@@ -5,7 +5,7 @@ import com.sample.data.remote.network_responses.NetworkResponse
 import retrofit2.Response
 import retrofit2.http.GET
 
-interface SimpsonsApi {
+interface CharacterApi {
     @GET(BuildConfig.GET_URL)
     suspend fun getCharacters(): Response<NetworkResponse>
 }

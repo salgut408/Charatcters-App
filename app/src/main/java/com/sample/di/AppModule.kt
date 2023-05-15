@@ -5,9 +5,9 @@ import androidx.room.Room
 import com.sample.data.constants.Constants.Companion.BASE_URL
 import com.sample.data.db.RelatedTopicDao
 import com.sample.data.db.CharacterDatabase
-import com.sample.data.remote.api_service.SimpsonsApi
-import com.sample.data.repository.SimpsonsRepositoryImpl
-import com.sample.domain.repositories.SimpsonsRepository
+import com.sample.data.remote.api_service.CharacterApi
+import com.sample.data.repository.CharacterRepositoryImpl
+import com.sample.domain.repositories.CharacterRepository
 import com.sample.domain.use_cases.GetCharactersListUseCase
 import dagger.Module
 import dagger.Provides
@@ -25,21 +25,21 @@ import javax.inject.Singleton
 object AppModule {
 
     @Provides
-    fun provideDao(simpsonsDatabase: CharacterDatabase): RelatedTopicDao = simpsonsDatabase.getDao()
+    fun provideDao(characterDatabase: CharacterDatabase): RelatedTopicDao = characterDatabase.getDao()
 
     @Provides
     fun provideCharactersListUseCase(
-        simpsonsRepository: SimpsonsRepository,
+        simpsonsRepository: CharacterRepository,
     ): GetCharactersListUseCase = GetCharactersListUseCase(simpsonsRepository)
 
 
 
 
     @Provides
-    fun provideSimpsonsRepository(
-        simpsonsApi: SimpsonsApi,
+    fun provideCharacterRepository(
+        characterApi: CharacterApi,
         relatedTopicDao: RelatedTopicDao
-    ): SimpsonsRepository = SimpsonsRepositoryImpl(simpsonsApi,  relatedTopicDao)
+    ): CharacterRepository = CharacterRepositoryImpl(characterApi,  relatedTopicDao)
 
 
     @Singleton
@@ -59,11 +59,11 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideSimpsonsApi(okHttpClient: OkHttpClient): SimpsonsApi =
+    fun provideCharacterApi(okHttpClient: OkHttpClient): CharacterApi =
         Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(SimpsonsApi::class.java)
+            .create(CharacterApi::class.java)
 }
