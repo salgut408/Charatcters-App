@@ -39,6 +39,14 @@ class CharacterRepositoryImpl @Inject constructor(
         }
         return result
     }
+
+    override suspend fun getTitleBarString(): String {
+        val result: String
+        withContext(Dispatchers.IO){
+            result = characterApi.getCharacters().body()?.heading ?: "no"
+        }
+        return result
+    }
 }
 
 

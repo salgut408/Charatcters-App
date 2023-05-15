@@ -7,6 +7,7 @@ interface CharacterRepository {
     suspend fun saveInDatabase()
     suspend fun getCharactersFromDbFlow(): Flow<List<RelatedTopicModel>>
     suspend fun searchDbFlow(searchQuery: String): Flow<List<RelatedTopicModel>>
+   suspend fun getTitleBarString(): String
 
 
 
