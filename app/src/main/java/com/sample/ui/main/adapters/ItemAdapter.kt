@@ -7,11 +7,16 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.sample.databinding.ItemPreviewBinding
 import com.sample.domain.domain_models.RelatedTopicModel
+import com.sample.ui.main.MainViewModel
 
-class ItemAdapter(): RecyclerView.Adapter<ItemAdapter.ItemViewHolder>() {
+class ItemAdapter(
+): RecyclerView.Adapter<ItemAdapter.ItemViewHolder>() {
 
     inner class ItemViewHolder(val binding: ItemPreviewBinding): RecyclerView.ViewHolder(binding.root) {
-
+        fun bind(relatedTopicModel: RelatedTopicModel){
+            binding.relatedTopicModel = relatedTopicModel
+            binding.executePendingBindings()
+        }
     }
 
     private val differCallBack = object : DiffUtil.ItemCallback<RelatedTopicModel>() {
@@ -33,6 +38,7 @@ class ItemAdapter(): RecyclerView.Adapter<ItemAdapter.ItemViewHolder>() {
     val differ = AsyncListDiffer(this, differCallBack)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
+
         return ItemViewHolder(
             ItemPreviewBinding.inflate(
                 LayoutInflater.from(parent.context),
@@ -43,8 +49,8 @@ class ItemAdapter(): RecyclerView.Adapter<ItemAdapter.ItemViewHolder>() {
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val item = differ.currentList[position]
+        holder.bind(item)
         holder.binding.apply {
-            itemName.text = item.name
             itemName.setOnClickListener {
                 onItemClickListener?.let {
                     it(item)

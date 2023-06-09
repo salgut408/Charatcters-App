@@ -68,6 +68,7 @@ class MainFragment : AbstractListDetailFragment() {
         savedInstanceState: Bundle?,
     ): View {
         _binding = ListPaneBinding.inflate(inflater, container, false)
+
         return binding.root
     }
 

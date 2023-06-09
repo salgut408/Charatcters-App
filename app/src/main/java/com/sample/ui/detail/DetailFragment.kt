@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
@@ -27,10 +28,11 @@ class DetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        binding = FragmentDetailBinding.inflate(inflater)
-        val character = DetailFragmentArgs.fromBundle(requireArguments()).itemArd
-        binding.name.text = character?.name
-        binding.description.text = character?.text
+
+
+        binding = DataBindingUtil.inflate(  layoutInflater, R.layout.fragment_detail, container, false)
+        binding.lifecycleOwner = this
+        binding.relatedTopicModel = DetailFragmentArgs.fromBundle(requireArguments()).itemArd
         return binding.root
     }
 
