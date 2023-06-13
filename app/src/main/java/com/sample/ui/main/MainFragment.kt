@@ -28,10 +28,18 @@ class MainFragment : AbstractListDetailFragment() {
     private val binding get() = _binding!!
 
 
+    override fun onCreateListPaneView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
+        _binding = ListPaneBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+
     override fun onListPaneViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onListPaneViewCreated(view, savedInstanceState)
-
-
         setUpRecyclerView()
 
         itemAdapter.setOnItemClickListener {
@@ -41,8 +49,8 @@ class MainFragment : AbstractListDetailFragment() {
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
-            mainViewModel.listUiState.collect{items ->
-                itemAdapter.differ.submitList(items.currentList)
+            mainViewModel.listUiState.collect{ listUiState ->
+                itemAdapter.differ.submitList(listUiState.currentList)
             }
         }
 
@@ -54,23 +62,12 @@ class MainFragment : AbstractListDetailFragment() {
                     mainViewModel.searchDb( binding.etSearch.editText!!.text.toString())
                 }
             }
-            override fun afterTextChanged(p0: Editable?) {
-
-            }
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            }
+            override fun afterTextChanged(p0: Editable?) {}
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
         })
     }
 
-    override fun onCreateListPaneView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View {
-        _binding = ListPaneBinding.inflate(inflater, container, false)
 
-        return binding.root
-    }
 
     private fun setUpRecyclerView() {
         itemAdapter = ItemAdapter()

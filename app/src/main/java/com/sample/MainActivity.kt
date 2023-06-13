@@ -17,34 +17,25 @@ class MainActivity : AppCompatActivity() {
 
     private val mainViewModel by viewModels<MainViewModel>()
 
+    lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-       val binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityMainBinding.inflate(layoutInflater)
 
         lifecycleScope.launch {
             mainViewModel.title.collect { title ->
                 supportActionBar?.title = title
-
             }
         }
-
-
-//        getSupportActionBar()?.title = mainViewModel.title.value
-
-        Log.e("MAIN_ACT_TOOLBAR", supportActionBar?.title.toString())
-
-
         setContentView(binding.root)
-
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
     }
 
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.fragmentContainerView)
-        return navController.navigateUp()
-                || super.onSupportNavigateUp()
+        return navController.navigateUp() || super.onSupportNavigateUp()
     }
 
 

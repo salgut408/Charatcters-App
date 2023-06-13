@@ -32,15 +32,11 @@ object AppModule {
         simpsonsRepository: CharacterRepository,
     ): GetCharactersListUseCase = GetCharactersListUseCase(simpsonsRepository)
 
-
-
-
     @Provides
     fun provideCharacterRepository(
         characterApi: CharacterApi,
         relatedTopicDao: RelatedTopicDao
     ): CharacterRepository = CharacterRepositoryImpl(characterApi,  relatedTopicDao)
-
 
     @Singleton
     @Provides

@@ -6,16 +6,13 @@ import androidx.lifecycle.viewModelScope
 import com.sample.domain.repositories.CharacterRepository
 import com.sample.domain.use_cases.GetCharactersListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val characterRepository: CharacterRepository,
+    private val characterRepository: CharacterRepository, // repository injected needed to search
     private val getCharactersListUseCase: GetCharactersListUseCase
 ) : ViewModel() {
 
@@ -24,6 +21,7 @@ class MainViewModel @Inject constructor(
 
     private val _title = MutableStateFlow("")
     val title: StateFlow<String> = _title.asStateFlow()
+
 
     init {
         loadList()
@@ -36,14 +34,15 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    private fun loadTitle() = viewModelScope.launch {
+    private  fun loadTitle() = viewModelScope.launch {
         val title = characterRepository.getTitleBarString()
         _title.emit(title)
-        Log.e("TITLE", _title.value.toString())
+        Log.e("TITLE", _title.value)
     }
 
     private fun loadList() = viewModelScope.launch{
         getCharactersListUseCase.invoke().collectLatest { allItems ->
+//            _listUiState.update { it.copy(loading = false, currentList = allItems) } OR this ?
             _listUiState .emit(ListUiState(loading = false, currentList = allItems))
         }
     }

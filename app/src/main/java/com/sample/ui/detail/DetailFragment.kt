@@ -25,10 +25,8 @@ class DetailFragment : Fragment() {
     lateinit var character: RelatedTopicModel
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
     ): View? {
-
 
         binding = DataBindingUtil.inflate(  layoutInflater, R.layout.fragment_detail, container, false)
         binding.lifecycleOwner = this
